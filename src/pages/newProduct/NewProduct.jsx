@@ -9,15 +9,17 @@ import {
 import app from "../../firebase";
 import { addProduct } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function NewProduct() {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState([]);
-  const [manufacturer, setManufacturer] = useState([]);
+  const [cat, setCat] = useState();
+  const [manufacturer, setManufacturer] = useState();
   const [vehicle, setVehicle] = useState([]);
   const [vehicleModel, setvehicleModel] = useState([]);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
   // const [subcat, setsubCat] = useState([]);
 
   const handleChange = (e) => {
@@ -26,7 +28,8 @@ export default function NewProduct() {
     });
   };
   const handleCat = (e) => {
-    setCat(e.target.value.split(","));
+    // setCat(e.target.value.split(",")); use this if categories is an arrat
+    setCat(e.target.value);
   };
   const handleVehicle = (e) => {
     setVehicle(e.target.value.split(","));
@@ -68,12 +71,14 @@ export default function NewProduct() {
       },
       (error) => {
         // Handle unsuccessful uploads
+        console.log("upload unsuccessful");
       },
       () => {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const product = { ...inputs, img: downloadURL, categories: cat };
+          const product = { ...inputs, img: downloadURL, category: cat, manufacturer: manufacturer, vehicle: vehicle, vehiclemodel: vehicleModel, seller: user._id.toString() };
+
           addProduct(product, dispatch);
         });
       }
@@ -97,7 +102,7 @@ export default function NewProduct() {
         <div className="addProductItem">
           <label>Description</label>
           <input
-            name="description"
+            name="desc"
             type="text"
             placeholder="description..."
             onChange={handleChange}

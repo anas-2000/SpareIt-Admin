@@ -29,16 +29,17 @@ const TopbarLayout = () => (
 function App() {
   // const admin = useSelector((state) => state.user.currentUser.isAdmin); //original
   const admin = useSelector((state) => state.user.currentUser?state.user.currentUser.isAdmin: false);
+  console.log(admin);
   return (
     <Router>
       {/* <Topbar /> */}
       {/* <div className="container"> */}
         {/* <Sidebar /> */}
-        {/* <Routes>
-          <Route path="/login" element={<LogIn />} />
+        <Routes>
+          <Route path="/login" element={admin?<Navigate to="/" />:<LogIn />} />
           <Route element={<TopbarLayout />}>
           <Route element={<SidebarLayout />} >
-            <Route exact path="/" element={!admin? <Navigate to="/login" />: <Home />} />
+            <Route exact path="/" element={admin?<Home /> :<Navigate to="/login" /> } />
             <Route path="/users" element={!admin? <Navigate to="/login" />:<UserList />} />
             <Route path="/user/:userId" element={!admin? <Navigate to="/login" />:<User />} />
             <Route path="/newUser" element={!admin? <Navigate to="/login" />:<NewUser />} />
@@ -47,10 +48,10 @@ function App() {
             <Route path="/newproduct" element={!admin? <Navigate to="/login" />:<NewProduct />} />
           </Route>
           </Route>
-        </Routes> */}
+        </Routes>
 
         {/* Does not test whether user is logged in (for testing) */}
-        <Routes>
+        {/* <Routes>
           <Route path="/login" element={<LogIn />} />
           <Route element={<TopbarLayout />}>
           <Route element={<SidebarLayout />} >
@@ -63,7 +64,7 @@ function App() {
             <Route path="/newproduct" element={<NewProduct />} />
           </Route>
           </Route>
-        </Routes>
+        </Routes> */}
       {/* </div> */}
     </Router>
   );

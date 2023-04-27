@@ -127,6 +127,7 @@ const LogIn = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+              <div>{error && <Error>Invalid username or password</Error>}</div>
               <Button
                 type="submit"
                 fullWidth
@@ -159,7 +160,6 @@ const LogIn = () => {
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
-            {error && <Error>Something went wrong...</Error>}
           </Box>
         </Grid>
       </Grid>

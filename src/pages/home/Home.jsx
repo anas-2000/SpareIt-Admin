@@ -4,12 +4,17 @@ import "./home.css";
 import { userData } from "../../dummyData";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
+import { userRequest } from "../../requestMethods";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Home() {
+
   return (
     <div className="home">
       <FeaturedInfo />
       <Chart data={userData} title="User Analytics" grid dataKey="Active User"/>
+      {/* <Chart data={rev} title="User Analytics" grid dataKey="Active User"/> */}
       <div className="homeWidgets">
         {/* <WidgetSm/> */}
         <WidgetLg/>

@@ -11,22 +11,24 @@ export default function FeaturedInfo() {
   useEffect(() => {
     const getIncome = async () => {
       try {
-        const res = await userRequest.get("orders/income");
-        setIncome(res.data);
-        setPerc((res.data[1].total * 100) / res.data[0].total - 100);
+        const res = await userRequest.get("/revenue");
+        setIncome(res.data[0].total);
+        // // setPerc((res.data[1].total * 100) / res.data[0].total - 100);
+        // setPerc((res.data[1]? res.data[1].total * 100 : res.data[0].total * 100) / res.data[0].total);
+        setPerc(res.data[1]? (res.data[1].total * 100) / res.data[0].total - 100 : 100);
       } catch {}
     };
     getIncome();
-  }, []);
+  }, []); 
 
   return (
     <div className="featured">
       <div className="featuredItem">
         <span className="featuredTitle">Revenue</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">Rs {income[1]?.total}</span>
+          <span className="featuredMoney">Rs {income}</span>
           <span className="featuredMoneyRate">
-            - {Math.floor(perc)}{" "} %
+             {Math.floor(perc)}{" "} %
             {perc < 0 ? (
               <ArrowDownward className="featuredIcon negative" />
             ) : (
@@ -39,9 +41,13 @@ export default function FeaturedInfo() {
       <div className="featuredItem">
         <span className="featuredTitle">Sales</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">Rs 4,415</span>
+          <span className="featuredMoney">Rs {income}</span>
           <span className="featuredMoneyRate">
-            -1.4 <ArrowDownward className="featuredIcon negative"/>
+          {Math.floor(perc)}{" "} % {perc < 0 ? (
+              <ArrowDownward className="featuredIcon negative" />
+            ) : (
+              <ArrowUpward className="featuredIcon" />
+            )}
           </span>
         </div>
         <span className="featuredSub">Compared to last month</span>

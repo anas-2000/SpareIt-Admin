@@ -29,7 +29,6 @@ const TopbarLayout = () => (
 function App() {
   // const admin = useSelector((state) => state.user.currentUser.isAdmin); //original
   const admin = useSelector((state) => state.user.currentUser?state.user.currentUser.isAdmin: false);
-  console.log(admin);
   return (
     <Router>
       {/* <Topbar /> */}

@@ -6,16 +6,18 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts } from "../../redux/apiCalls";
+import { deleteProduct, getProducts, getProductsBySeller } from "../../redux/apiCalls";
 
 export default function ProductList() {
   const [data, setData] = useState(productRows);
+  const user = useSelector((state) => state.user.currentUser)
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
 
-  useEffect(() => {
-    getProducts(dispatch);
+  useEffect(() => { 
+    // getProducts(dispatch);
+      getProductsBySeller(dispatch, user._id);
   }, [dispatch]);
 
   const handleDelete = (id) => {
